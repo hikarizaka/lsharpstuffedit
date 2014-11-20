@@ -2,7 +2,7 @@
 
 ### Assemblies
 
-#### *Deniz Nunu
+* #### Deniz Nunu
   - SBTW Assembly
   - Harass E with Mana Slider
   - Kill Steal With E

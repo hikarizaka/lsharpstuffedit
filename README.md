@@ -1,7 +1,5 @@
 # Deniz617's Assemblies
 
-### Assemblies
-
 
 ####* DenizNunu
   - SBTW Assembly

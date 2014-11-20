@@ -47,7 +47,7 @@ namespace Nunu
             Q = new Spell(SpellSlot.Q, 125);
             W = new Spell(SpellSlot.W, 700);
             E = new Spell(SpellSlot.E, 550);
-            E = new Spell(SpellSlot.R, 650);
+            R = new Spell(SpellSlot.R, 650);
             SpellList.Add(Q);
             SpellList.Add(W);
             SpellList.Add(E);
@@ -167,7 +167,7 @@ namespace Nunu
                 {
                     E.CastOnUnit(target, packetCast);
                 }
-                if (target != null && Config.Item("UseEHarass").GetValue<bool>() && !(Player.IsChannelingImportantSpell()))
+                if (target != null && !(Player.IsChannelingImportantSpell()))
                 {
                     E.CastOnUnit(target, packetCast);
                 }

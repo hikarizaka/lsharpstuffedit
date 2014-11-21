@@ -80,7 +80,8 @@ namespace Kalista
             Config.SubMenu("Harass").AddItem(new MenuItem("QMana", "Min Mana Q").SetValue(new Slider(40, 1, 100)));
             Config.SubMenu("Harass").AddItem(new MenuItem("HarassActive", "Harass!").SetValue(new KeyBind("C".ToCharArray()[0], KeyBindType.Press)));
 
-     
+            Config.AddSubMenu(new Menu("R", "R"));
+            Config.SubMenu("R").AddItem(new MenuItem("MoveToMouse", "Move to mouse (Exploit)").SetValue(false));
 
             //Damage after combo:
             var eDamage = new MenuItem("DamageAfterCombo", "Draw Damage After Used Q+2AA").SetValue(true);
@@ -136,7 +137,13 @@ namespace Kalista
                 }
             }
         }
-
+                if (Config.Item("MoveToMouse").GetValue<bool>())
+                {
+                    var p = ObjectManager.Player.Position.To2D().Extend(Game.CursorPos.To2D(), 500);
+                    ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, p.To3D());
+                }
+                return;
+            }
         private static void Game_OnGameUpdate(EventArgs args)
         {
             packetCast = Config.Item("UsePacket").GetValue<bool>();

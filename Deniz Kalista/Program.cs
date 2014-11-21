@@ -80,8 +80,6 @@ namespace Kalista
             Config.SubMenu("Harass").AddItem(new MenuItem("QMana", "Min Mana Q").SetValue(new Slider(40, 1, 100)));
             Config.SubMenu("Harass").AddItem(new MenuItem("HarassActive", "Harass!").SetValue(new KeyBind("C".ToCharArray()[0], KeyBindType.Press)));
 
-            Config.AddSubMenu(new Menu("R", "R"));
-            Config.SubMenu("R").AddItem(new MenuItem("MoveToMouse", "Move to mouse (Exploit)").SetValue(false));
 
             //Damage after combo:
             var eDamage = new MenuItem("DamageAfterCombo", "Draw Damage After Used Q+2AA").SetValue(true);

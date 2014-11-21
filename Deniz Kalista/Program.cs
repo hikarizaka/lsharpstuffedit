@@ -44,9 +44,15 @@ namespace Kalista
             if (Player.BaseSkinName != ChampionName) return;
 
             //Create the spells
+
             Q = new Spell(SpellSlot.Q, 1450);
             W = new Spell(SpellSlot.W, 5500);
-            R = new Spell(SpellSlot.R, 1200);
+            E = new Spell(SpellSlot.E, 950);
+            R = new Spell(SpellSlot.R, 1250);
+            Q.SetSkillshot(0.25f, 60f, 2000f, true, SkillshotType.SkillshotLine);
+            W.SetSkillshot(0.25f, 80f, 1600f, false, SkillshotType.SkillshotLine);
+            R.SetSkillshot(1f, 160f, 2000f, false, SkillshotType.SkillshotLine);
+        
             SpellList.Add(Q);
             SpellList.Add(W);
             SpellList.Add(E);
@@ -111,12 +117,12 @@ namespace Kalista
             Game.OnGameUpdate += Game_OnGameUpdate;
             Orbwalking.BeforeAttack += OrbwalkingOnBeforeAttack;
         }
-
         private static void OrbwalkingOnBeforeAttack(Orbwalking.BeforeAttackEventArgs args)
         {
             if (Config.Item("ComboActive").GetValue<KeyBind>().Active)
-                args.Process = !(Q.IsReady() || W.IsReady() || E.IsReady() || Player.Distance(args.Target) >= 600);
+                args.Process = !(Q.IsReady() || W.IsReady() || E.IsReady() || Player.Distance(args.Target) >= 550);
         }
+
 
         private static void Drawing_OnDraw(EventArgs args)
         {
@@ -154,9 +160,9 @@ namespace Kalista
                 var eman = Config.Item("EMana").GetValue<Slider>().Value;
                     if ((Player.Mana / Player.MaxMana * 100) > eman)
                         {
-                            foreach (var buff in target.Buffs.Where(buff => buff.DisplayName.ToLower() == "kalistarend").Where(buff => buff.Count == Config.Item("eStacks").GetValue<Slider>().Value))
+                            foreach (var buff in target.Buffs.Where(buff => buff.DisplayName.ToLower() == "kalistaexpungemarker").Where(buff => buff.Count == Config.Item("eStacks").GetValue<Slider>().Value))
                             {
-                                 E.Cast(target, packetCast);
+                                 E.Cast(target);
                             }
                         }
             }
@@ -165,7 +171,7 @@ namespace Kalista
                 var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Physical); 
                 if (target.Health < Player.GetSpellDamage(Player, SpellSlot.E))
                 {
-                    E.Cast(target, packetCast);
+                    E.Cast(target);
                 }
             }
 
@@ -175,7 +181,7 @@ namespace Kalista
                 var ManaHarass = Config.Item("QMana").GetValue<Slider>().Value;
                 if (Q.IsReady() && target != null && Config.Item("UseQHarass").GetValue<bool>() && (Player.Mana / Player.MaxMana * 100) > ManaHarass && !(Player.IsChannelingImportantSpell()))
                 {
-                    Q.CastIfHitchanceEquals(target, target.IsMoving ? HitChance.High : HitChance.Medium, packetCast);
+                    Q.Cast(target);
                    
                 }
             }
@@ -195,11 +201,11 @@ namespace Kalista
 
                 if (Config.Item("ComboQ").GetValue<bool>() && Player.Distance(target) >= 1450 && Q.IsReady())// if target is in spear range and spear ready
                     {
-                        Q.CastIfHitchanceEquals(target, target.IsMoving ? HitChance.High : HitChance.Medium, packetCast);
+                        Q.Cast(target);
                     }
                          if (E.IsReady())
                                 {
-                                    foreach (var buff in target.Buffs.Where(buff => buff.DisplayName.ToLower() == "kalistarend").Where(buff => buff.Count == Config.Item("eStacks").GetValue<Slider>().Value))
+                                    foreach (var buff in target.Buffs.Where(buff => buff.DisplayName.ToLower() == "kalistaexpungemarker").Where(buff => buff.Count == Config.Item("eStacks").GetValue<Slider>().Value))
                                     {
                                          E.Cast(target, packetCast);
                                     }
@@ -255,7 +261,7 @@ namespace Kalista
                 if (target != null && Config.Item("UseQHarass").GetValue<bool>() && (Player.Mana / Player.MaxMana * 100) > ManaHarass && !(Player.IsChannelingImportantSpell()))
             {
 
-                Q.CastIfHitchanceEquals(target, target.IsMoving ? HitChance.High : HitChance.Medium, packetCast);
+                Q.Cast(target);
             }
             }
         }

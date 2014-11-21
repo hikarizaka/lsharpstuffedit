@@ -135,13 +135,6 @@ namespace Kalista
                 }
             }
         }
-                if (Config.Item("MoveToMouse").GetValue<bool>())
-                {
-                    var p = ObjectManager.Player.Position.To2D().Extend(Game.CursorPos.To2D(), 500);
-                    ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, p.To3D());
-                }
-                return;
-            }
         private static void Game_OnGameUpdate(EventArgs args)
         {
             packetCast = Config.Item("UsePacket").GetValue<bool>();
